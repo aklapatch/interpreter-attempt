@@ -1,0 +1,81 @@
+# comments
+#d doc comments
+$ multi line
+  comment $
+$d multi line
+  doc comment $
+
+# variables
+def varname 32;
+# assignment
+ 64 -> varname
+# typed variables
+def var2::uint 32;
+# built in types:
+# - uint
+# - sint
+# - ptr
+# - slice
+# - bytes
+# - char
+# - float
+# - type
+
+enum enum_name 
+    member1
+    member2;
+
+# setting enum members
+# only works with integer literals
+enum enum_2 
+    member1 2
+    member2 0;
+
+# delcaring a struct
+struct struct_name
+    member1::sint
+    member2::float;
+
+# new idea, I don't think the above will work:
+
+# What do I want the language to be:
+# Simple, easy to add to, (simpler than C if possible)
+# easy to understand
+# not limited, no external code generation if possible, templates, metaprogramming, etc.
+# a LISP seems like the right route, but I don't really know.
+# I can use macros and objects to make templates without using comptime really.
+# macros will be more full featured, like LISP, and they will be typechecked at least.
+# there may still be a form of comptime if for bools and such.
+# also 
+
+# let's modify reverse polish notation so that it puts the result into veriables
+2 3 + result_name
+3 4 * result_name
+
+ 3 2 4 + * result_name # result_name should be 18
+
+ #function calls
+ (arg other_arg)fn_name result
+
+def fn_name(arg1::sint arg2::uint | float,uint)
+    return 0.2 (arg1 float)as * , arg2 2 /;
+    # the  semicolon ends the function declaration
+    # commas are used to return multiple values or to make tuples I guess.
+
+#ifs
+if 3 2 == {
+    # do something
+} elif 7 7 == {
+
+} else {
+
+}
+
+# we will have macros and that should be used to make templates.
+# types will be a parameter too, so that should allow us to pass them around.
+macro template_type(type_name::type)
+    struct test_type 
+        member1::type_name;;
+
+def new_type template_type(uint);
+def inited_new_type::new_type [ 32 ]new_type;
