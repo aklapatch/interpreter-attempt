@@ -33,6 +33,7 @@ typedef enum {
     tok_elif,
     tok_else,
     tok_import,
+    tok_bool,
 }tok_type;
 
 #define SWITCH_STR(val) case val: return #val
@@ -55,14 +56,15 @@ char * tok_type_str(tok_type in){
         SWITCH_STR(tok_r_brace);
         SWITCH_STR(tok_r_paren);
         SWITCH_STR(tok_l_paren);
-        SWITCH_STR(tok_comma);
         SWITCH_STR(tok_semicolon);
+        SWITCH_STR(tok_comma);
         SWITCH_STR(tok_colon);
         SWITCH_STR(tok_typedec);
         SWITCH_STR(tok_if);
         SWITCH_STR(tok_elif);
         SWITCH_STR(tok_else);
         SWITCH_STR(tok_import);
+        SWITCH_STR(tok_bool);
         default:
             printf("Unrecognized token type %u\n", in);
             return NULL;
@@ -237,6 +239,8 @@ char* nextToken(token * output, char * str, char * str_end){
             {"if",tok_if},
             {"else",tok_else},
             {"elif", tok_elif},
+            {"true", tok_bool},
+            {"false", tok_bool},
         };
         for (uint16_t i = 0; i < sizeof(word_pairs)/sizeof(word_pairs[0]); ++i){
             if (strlen(word_pairs[i].word) == output->len){

@@ -9,6 +9,8 @@ $d multi line
 def varname 32;
 # assignment
 64 -> varname
+def boolname:bool true;
+false -> boolname
 # typed variables
 def var2:uint 32;
 # built in types:
@@ -20,6 +22,7 @@ def var2:uint 32;
 # - char
 # - float
 # - type
+# - bool
 
 enum enum_name 
     member1
@@ -70,6 +73,7 @@ def fn_name(arg1:sint arg2:uint | float,uint)
     return 0.2 (arg1 float)as * , arg2 2 /;
     # the  semicolon ends the function declaration
     # commas are used to return multiple values or to make tuples I guess.
+
 
 #ifs
 if 3 2 == {
