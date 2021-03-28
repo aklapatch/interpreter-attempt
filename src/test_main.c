@@ -27,6 +27,16 @@ char * file_to_buffer(char * fname, uint32_t * out_len){
     return out;
 }
 
+void print_token(token tok_in){
+    printf("token: len=%u type=%s ", tok_in.len, tok_type_str(tok_in.type));
+    printf("contents=");
+    while (tok_in.len-- >0){
+        printf("%c",*tok_in.start);
+        tok_in.start++;
+    }
+    printf("\n");
+}
+
 int main(){
     uint32_t f_len = 0;
     char * file = file_to_buffer("lang-sample.txt", &f_len);
@@ -34,7 +44,16 @@ int main(){
         ERROR("Failed to open file!");
         return EXIT_FAILURE;
     }
-    printf("%s", file);
+
+    token tok_out;
+    char * file_end = file + f_len;
+    char * tok_end = file;
+    do {
+        tok_end = nextToken(&tok_out, tok_end, file_end);
+        if (tok_end != NULL){
+            print_token(tok_out);
+        }
+    } while (tok_end != NULL && tok_end < file_end);
     free(file);
     return EXIT_SUCCESS;
 }

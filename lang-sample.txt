@@ -8,9 +8,9 @@ $d multi line
 # variables
 def varname 32;
 # assignment
- 64 -> varname
+64 -> varname
 # typed variables
-def var2::uint 32;
+def var2:uint 32;
 # built in types:
 # - uint
 # - sint
@@ -33,8 +33,17 @@ enum enum_2
 
 # delcaring a struct
 struct struct_name
-    member1::sint
-    member2::float;
+    member1:sint
+    member2:float;
+#struct init
+def struct_instance:struct_name;
+# I need to evaluate this syntax. using parens could be better, but you aren't really 
+# calling a function, you are initing an object, which I feel is different.
+[ -3 .457 ]: struct_name -> struct_instance
+# struct assignment
+-72 -> struct_instance.member1
+.732 -> struct_instance.member2
+
 
 # new idea, I don't think the above will work:
 
@@ -57,7 +66,7 @@ struct struct_name
  #function calls
  (arg other_arg)fn_name result
 
-def fn_name(arg1::sint arg2::uint | float,uint)
+def fn_name(arg1:sint arg2:uint | float,uint)
     return 0.2 (arg1 float)as * , arg2 2 /;
     # the  semicolon ends the function declaration
     # commas are used to return multiple values or to make tuples I guess.
@@ -73,9 +82,9 @@ if 3 2 == {
 
 # we will have macros and that should be used to make templates.
 # types will be a parameter too, so that should allow us to pass them around.
-macro template_type(type_name::type)
+macro template_type(type_name:type)
     struct test_type 
-        member1::type_name;;
+        member1:type_name;;
 
 def new_type template_type(uint);
-def inited_new_type::new_type [ 32 ]new_type;
+def inited_new_type:new_type [ 32 ]new_type;
