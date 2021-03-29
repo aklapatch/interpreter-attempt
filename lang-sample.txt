@@ -1,3 +1,7 @@
+def fn_name(arg1:sint arg2:uint | float,uint)
+    0.2 (arg1 float)as * , arg2 2 /;
+    # the  semicolon ends the function declaration
+    # commas are used to return multiple values or to make tuples I guess.
 # comments
 #d doc comments
 $ multi line
@@ -47,8 +51,9 @@ def struct_instance:struct_name;
 -72 -> struct_instance.member1
 .732 -> struct_instance.member2
 
-
-# new idea, I don't think the above will work:
+def str:slice:u8 "test text";
+def char:u8 '\n';
+def other_arr:arrary:u8 [ 3 4 5 2 3 4];
 
 # What do I want the language to be:
 # Simple, easy to add to, (simpler than C if possible)
@@ -69,10 +74,6 @@ def struct_instance:struct_name;
  #function calls
  (arg other_arg)fn_name result
 
-def fn_name(arg1:sint arg2:uint | float,uint)
-    return 0.2 (arg1 float)as * , arg2 2 /;
-    # the  semicolon ends the function declaration
-    # commas are used to return multiple values or to make tuples I guess.
 
 
 #ifs

@@ -27,6 +27,8 @@ typedef enum {
     tok_l_brace,
     tok_comma,
     tok_semicolon,
+    tok_string,
+    tok_chars,
     tok_colon,
     tok_typedec,
     tok_if,
@@ -41,6 +43,7 @@ typedef enum {
 char * tok_type_str(tok_type in){
     switch(in){
         SWITCH_STR(tok_unknown);
+        SWITCH_STR(tok_float);
         SWITCH_STR(tok_comment);
         SWITCH_STR(tok_doc_comment);
         SWITCH_STR(tok_macro);
@@ -65,6 +68,8 @@ char * tok_type_str(tok_type in){
         SWITCH_STR(tok_else);
         SWITCH_STR(tok_import);
         SWITCH_STR(tok_bool);
+        SWITCH_STR(tok_string);
+        SWITCH_STR(tok_chars);
         default:
             printf("Unrecognized token type %u\n", in);
             return NULL;
@@ -76,7 +81,7 @@ bool isReservedChar(char input){
     if (input == '\0'){
         return false;
     }
-    return strchr("#,$(){}[];:", input) != NULL;
+    return strchr("#,$\"'(){}[];:", input) != NULL;
 }
 
 typedef struct token{
@@ -137,6 +142,23 @@ char* nextToken(token * output, char * str, char * str_end){
         return comment_end;
     }
 
+    // handle string and character things
+    if (*str == '"' || *str == '\''){
+        // Go till the end
+        char start_char = *str;
+        char * cursor = str;
+        cursor++;
+        char * end = strchr(cursor, start_char);
+        if (end == NULL){
+            ERROR("Unterminated string thingie!");
+            return NULL;
+        }
+        output->type = (start_char == '"') ? tok_string : tok_chars;
+        output->start = str;
+        output->len = (uint32_t)(end + 1 - str);
+        return end + 1;
+    }
+
     // handle reserved characters
     if (isReservedChar(*str)){
         output->start = str;
@@ -177,7 +199,8 @@ char* nextToken(token * output, char * str, char * str_end){
     // check for numbers, this includes - signs
     if (isdigit(*str) || *str == '-' || *str == '.'){
         // don't do anything about a - without a number behind it
-        if (str + 1 < str_end && isdigit(*str)){
+        if (isdigit(*str) || 
+                (str + 1 < str_end && isdigit(str[1]))){
             bool has_dot = false;
             if (*str == '.'){
                 has_dot = true;
@@ -194,7 +217,7 @@ char* nextToken(token * output, char * str, char * str_end){
                         ERROR("Got second dot!");
                         return NULL;
                     }
-                    bool has_dot = true;
+                    has_dot = true;
                     cursor++;
                 }
             } while (cursor < str_end && isdigit(*cursor));
