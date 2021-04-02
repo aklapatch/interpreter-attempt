@@ -21,7 +21,11 @@ char * file_to_buffer(char * fname, uint32_t * out_len){
         PERROR("Failed to allocate memory for file buffer");
         return NULL;
     }
-    fread(out, *out_len, 1, fp);
+    size_t bytes_read = fread(out, *out_len, 1, fp);
+    if (bytes_read != 1){
+        PERROR("Failed to read whole file");
+        return NULL;
+    }
     out[*out_len] = '\0';
     fclose(fp);
     return out;

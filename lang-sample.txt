@@ -74,8 +74,6 @@ def other_arr:arrary:u8 [ 3 4 5 2 3 4];
  #function calls
  (arg other_arg)fn_name result
 
-
-
 #ifs
 if 3 2 == {
     # do something

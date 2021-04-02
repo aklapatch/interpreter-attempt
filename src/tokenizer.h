@@ -31,6 +31,7 @@ typedef enum {
     tok_chars,
     tok_colon,
     tok_typedec,
+    tok_pipe,
     tok_if,
     tok_elif,
     tok_else,
@@ -42,6 +43,7 @@ typedef enum {
 
 char * tok_type_str(tok_type in){
     switch(in){
+        SWITCH_STR(tok_pipe);
         SWITCH_STR(tok_unknown);
         SWITCH_STR(tok_float);
         SWITCH_STR(tok_comment);
@@ -81,7 +83,7 @@ bool isReservedChar(char input){
     if (input == '\0'){
         return false;
     }
-    return strchr("#,$\"'(){}[];:", input) != NULL;
+    return strchr("#,$\"'()|{}[];:", input) != NULL;
 }
 
 typedef struct token{
@@ -177,6 +179,7 @@ char* nextToken(token * output, char * str, char * str_end){
             { ';', tok_semicolon},
             { ',', tok_comma},
             { ':', tok_colon},
+            { '|', tok_pipe},
         };
         output->type = tok_unknown;
         for (uint16_t i = 0;
