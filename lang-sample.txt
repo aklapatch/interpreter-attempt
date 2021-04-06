@@ -91,3 +91,11 @@ macro template_type(type_name:type)
 
 def new_type template_type(uint);
 def inited_new_type:new_type [ 32 ]new_type;
+
+# possible template syntax
+def template_ex(| type): arg1
+  struct member1: arg1;
+
+# initing that new type 
+def new_instance:template_ex:uint [ 32 ]template_ex:uint;
+

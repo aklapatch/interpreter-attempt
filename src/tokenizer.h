@@ -283,8 +283,3 @@ char* nextToken(token * output, char * str, char * str_end){
     // no token found
     return NULL;
 }
-
-int tokenize(char * input, token * output){
-
-    return 0;
-}
